@@ -26,27 +26,39 @@ export default function Game({ history }) {
     history.push("/");
   };
 
-  const changeQuestion = (bonus = 0) => {
-    // makes sure when no other code is ran when user is done
-    if (questions.length === 0) {
-      setDone(true);
-      return setScore(score + bonus);
-    }
-    // get a random index of a question
-    const randomQuestionIndex = Math.floor(Math.random() * questions.length);
-    // we set the current question to the question at the radom index
-    const currentQuestion = questions[randomQuestionIndex];
-    // remove that question from the question going forward
-    const remainingQuestions = [...questions];
-    remainingQuestions.splice(randomQuestionIndex, 1);
-    // update the state to reflect these changes
+  const changeQuestion = useCallback(
+    (bonus = 0) => {
+      // makes sure when no other code is ran when user is done
+      if (questions.length === 0) {
+        setDone(true);
+        return setScore(score + bonus);
+      }
 
-    setQuestions(remainingQuestions);
-    setCurrentQuestion(currentQuestion);
-    setLoading(false);
-    setScore(score + bonus);
-    setQuestionNumber(questionNumber + 1);
-  };
+      // get a random index of a question
+      const randomQuestionIndex = Math.floor(Math.random() * questions.length);
+      // we set the current question to the question at the radom index
+      const currentQuestion = questions[randomQuestionIndex];
+      // remove that question from the question going forward
+      const remainingQuestions = [...questions];
+      remainingQuestions.splice(randomQuestionIndex, 1);
+      // update the state to reflect these changes
+
+      setQuestions(remainingQuestions);
+      setCurrentQuestion(currentQuestion);
+      setLoading(false);
+      setScore(score + bonus);
+      setQuestionNumber(questionNumber + 1);
+    },
+    [
+      score,
+      questionNumber,
+      questions,
+      setQuestions,
+      setLoading,
+      setCurrentQuestion,
+      setQuestionNumber,
+    ]
+  );
 
   useEffect(() => {
     if (!currentQuestion && questions.length) {
