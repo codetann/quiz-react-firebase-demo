@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Question from "./Question";
 import HUD from "./HUD";
 import SaveScoreForm from "./SaveScoreForm";
